@@ -4,11 +4,9 @@ var http = require('http');
 var camera = require('camera-vc0706').use(tessel.port['D']);
 
 var rfid = rfidlib.use(tessel.port['A']);
+var config = require('./config.json');
 
 var wifi = require('wifi-cc3000');
-var network = "John's iPhone"
-var password = process.env.WIFI_PASSWORD;
-var security = 'wpa2';
 
 // Connect to the wifi
 if (!wifi.isConnected()) {
@@ -44,9 +42,9 @@ rfid.on('error', function (err) {
 */
 function connect(){
   wifi.connect({
-  security: security
-  , ssid: network
-  , password: password
+  security: config.wifi.security
+  , ssid: config.wifi.network
+  , password: config.wifi.password
   , timeout: 30
   });
 }

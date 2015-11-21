@@ -1,0 +1,7 @@
+{
+	"wifi": {
+		"network": "",
+		"password": "",
+    "security": "wpa2"
+	}
+}
