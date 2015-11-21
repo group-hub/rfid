@@ -1,8 +1,19 @@
 var tessel = require('tessel');
 var rfidlib = require('rfid-pn532');
+var http = require('http');
 var camera = require('camera-vc0706').use(tessel.port['D']);
 
 var rfid = rfidlib.use(tessel.port['A']);
+
+var wifi = require('wifi-cc3000');
+var network = "John's iPhone"
+var password = process.env.WIFI_PASSWORD;
+var security = 'wpa2';
+
+// Connect to the wifi
+if (!wifi.isConnected()) {
+  connect();
+}
 
 rfid.on('ready', function (version) {
   console.log('Ready to read RFID card');
@@ -27,3 +38,15 @@ rfid.on('ready', function (version) {
 rfid.on('error', function (err) {
   console.error(err);
 });
+
+/**
+* Connect to wifi
+*/
+function connect(){
+  wifi.connect({
+  security: security
+  , ssid: network
+  , password: password
+  , timeout: 30
+  });
+}
